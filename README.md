@@ -1,24 +1,44 @@
-# README
+# DEMO
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a demo to show-case how can we rename references in a rails app.
 
-Things you may want to cover:
+## Schema
+This is the schema
 
-* Ruby version
+```
 
-* System dependencies
+  +--------------+       +-------------+
+  |     users    |       |    offers   |
+  +--------------+       +-------------+
++-| id           |---+   | id          |-+
+| | first_name   |   |   | name        | |
+| | last_name    |   |   | description | |
+| | address      |   +-->| owner_id    | |
+| | phone_number |       +-------------+ |
+| +--------------+                       |
+|                                        |
+|            +-------------+             |
+|            |  bookings   |             |
+|            +-------------+             |
+|            | id          |             |
+|            | start_time  |             |
+|            | end_time    |             |
++----------->| customer_id |             |
+             | offer_id    |<------------+
+             +-------------+
 
-* Configuration
+```
 
-* Database creation
+## What needs to be done?
 
-* Database initialization
+We need to rename the reference in the migration:
+```ruby
+  t.references :owner, null: false, foreign_key: { to_table: :users }
+```
 
-* How to run the test suite
+We need to rename the reference in the model:
+```ruby
+  belongs_to :owner, class_name: 'User'
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+And we're good to go 🤓
