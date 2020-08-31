@@ -41,4 +41,26 @@ We need to rename the reference in the model:
   belongs_to :owner, class_name: 'User'
 ```
 
+We can rename everything that we want:
+
+```ruby
+# app/models/offer.rb
+class Offer < ApplicationRecord
+  belongs_to :owner, class_name: 'User'
+  has_many :bookings, dependent: :destroy
+  has_many :customers, through: :bookings
+end
+
+
+```
+
+```ruby
+# app/models/user.rb
+class User < ApplicationRecord
+  has_many :owned_offers, class_name: 'Offer', foreign_key: :owner_id
+  has_many :bookings, foreign_key: :customer_id
+  has_many :purchased_offers, through: :bookings, source: :offer
+end
+```
+
 And we're good to go 🤓
