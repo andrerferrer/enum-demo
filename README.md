@@ -2,6 +2,9 @@
 
 This is a demo to show-case how can we rename references in a rails app.
 
+[You can also check my other demos](https://github.com/andrerferrer/dedemos/blob/master/README.md#ded%C3%A9mos).
+
+
 ## Schema
 This is the schema
 
