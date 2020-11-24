@@ -44,6 +44,12 @@ We need to rename the reference in the model:
   belongs_to :owner, class_name: 'User'
 ```
 
+> If we didn't have `owner_id` in the `offers` table, but `user_id`, we'd have to specify the foreign_key as well
+> ```ruby
+> belongs_to :owner, class_name: 'User', foreign_key: user_id
+> ```
+
+
 We can rename everything that we want:
 
 ```ruby
