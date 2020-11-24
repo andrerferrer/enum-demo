@@ -73,3 +73,6 @@ end
 ```
 
 And we're good to go 🤓
+
+### Other sources
+https://marouenbousnina.com/tutorials/2018-06-11-rename-activerecord-model/
