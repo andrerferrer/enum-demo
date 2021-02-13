@@ -8,7 +8,7 @@ This was created from [this other demo](https://github.com/andrerferrer/rename-r
 
 ## How to do It
 
-Imagine that we want to have bookings and that these bookings have statuses:
+Imagine that we want to have bookings and that these bookings have status:
 `pending`, `processing payment`, `confirmed`, `cancelled`.
 
 That's one situation that the usage of `enum` would make a lot of sense.
