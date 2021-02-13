@@ -113,6 +113,8 @@ class AddIndexToBookings < ActiveRecord::Migration[6.0]
 end
 ```
 
+#### Add suffixes and preffixes
+[TBD](https://naturaily.com/blog/ruby-on-rails-enum#4-use-prefix-or-suffix-option-in-your-enums)
 
 
 And we're good to go 🤓
@@ -120,3 +122,4 @@ And we're good to go 🤓
 ### Other sources
 https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html
 https://dev.to/ousmanedev/use-activerecord-enum-for-your-enumerations-p7k
+https://naturaily.com/blog/ruby-on-rails-enum
