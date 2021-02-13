@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_13_135345) do
+ActiveRecord::Schema.define(version: 2021_02_13_150120) do
 
   create_table "bookings", force: :cascade do |t|
     t.date "start_on"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_02_13_135345) do
     t.integer "status", default: 0, null: false
     t.index ["customer_id"], name: "index_bookings_on_customer_id"
     t.index ["offer_id"], name: "index_bookings_on_offer_id"
+    t.index ["status"], name: "index_bookings_on_status"
   end
 
   create_table "offers", force: :cascade do |t|
