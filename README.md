@@ -1,4 +1,4 @@
-# DEMO
+## Goal
 
 This is a demo to show-case how we can use [`ActiveRecord::Enum`](https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html) in a rails app.
 
