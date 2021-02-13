@@ -65,7 +65,6 @@ end
     ```ruby
       booking.update status: 'confirmed'
     ```
-
     We can use
     ```ruby
       booking.confirmed!
@@ -91,6 +90,16 @@ end
       Booking.confirmed # same as Booking.where(status: :confirmed)
       Booking.cancelled # same as Booking.where(status: :cancelled)
     ```
+
+### More Advanced Stuff
+
+#### Make it faster to query your model
+
+If we want to improve the app further, we can also make an index out of the `enum` attribute (because we will be using it for querying a lot).
+
+To do that, we need to add a migration
+
+
 
 And we're good to go 🤓
 
