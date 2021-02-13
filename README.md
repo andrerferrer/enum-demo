@@ -1,8 +1,10 @@
 # DEMO
 
-This is a demo to show-case how can we rename references in a rails app.
+This is a demo to show-case how we can use [`ActiveRecord::Enum`](https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html) in a rails app.
 
 [You can also check my other demos](https://github.com/andrerferrer/dedemos/blob/master/README.md#ded%C3%A9mos).
+
+This was created from [this other demo](https://github.com/andrerferrer/rename-references-demo).
 
 ## How to do It
 
