@@ -9,5 +9,5 @@ Offer.create! name: 'A backwards trip through the seven seas', description: 'Lor
 
 
 # Create a booking
-Booking.create! start_on: '2020-05-23', end_on: '2020-05-30', customer: User.last, offer: Offer.first
-Booking.create! start_on: '2020-05-24', end_on: '2020-06-30', customer: User.first, offer: Offer.last
+Booking.create! start_on: 1.day.from_now, end_on: 1.week.from_now, customer: User.last, offer: Offer.first
+Booking.create! start_on: 2.day.from_now, end_on: 2.week.from_now, customer: User.first, offer: Offer.last
