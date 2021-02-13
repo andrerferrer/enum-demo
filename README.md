@@ -4,75 +4,96 @@ This is a demo to show-case how can we rename references in a rails app.
 
 [You can also check my other demos](https://github.com/andrerferrer/dedemos/blob/master/README.md#ded%C3%A9mos).
 
+## How to do It
 
-## Schema
-This is the schema
+Imagine that we want to have bookings and that these bookings have statuses:
+`pending`, `processing payment`, `confirmed`, `cancelled`.
 
-```
+That's one situation that the usage of `enum` would make a lot of sense.
 
-  +--------------+       +-------------+
-  |     users    |       |    offers   |
-  +--------------+       +-------------+
-+-| id           |---+   | id          |-+
-| | first_name   |   |   | name        | |
-| | last_name    |   |   | description | |
-| | address      |   +-->| owner_id    | |
-| | phone_number |       +-------------+ |
-| +--------------+                       |
-|                                        |
-|            +-------------+             |
-|            |  bookings   |             |
-|            +-------------+             |
-|            | id          |             |
-|            | start_time  |             |
-|            | end_time    |             |
-+----------->| customer_id |             |
-             | offer_id    |<------------+
-             +-------------+
+### And why do we use `enum`?
 
-```
+We use it when we want to have an easier way to:
 
-## What needs to be done?
+1. validate data;
+1. query or update the model;
+1. store integers instead of strings (costs less storage in the DB)
 
-We need to rename the reference in the migration:
-```ruby
-  t.references :owner, null: false, foreign_key: { to_table: :users }
-```
+For that, we use [`ActiveRecord::Enum`](https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html).
 
-We need to rename the reference in the model:
-```ruby
-  belongs_to :owner, class_name: 'User'
-```
+### How to actually use it?
 
-> If we didn't have `owner_id` in the `offers` table, but `user_id`, we'd have to specify the foreign_key as well
-> ```ruby
-> belongs_to :owner, class_name: 'User', foreign_key: user_id
-> ```
-
-
-We can rename everything that we want:
+We need to add the column that we want to use `enum` with (Status in our example):
 
 ```ruby
-# app/models/offer.rb
-class Offer < ApplicationRecord
-  belongs_to :owner, class_name: 'User'
-  has_many :bookings, dependent: :destroy
-  has_many :customers, through: :bookings
-end
-
-
-```
-
-```ruby
-# app/models/user.rb
-class User < ApplicationRecord
-  has_many :owned_offers, class_name: 'Offer', foreign_key: :owner_id
-  has_many :bookings, foreign_key: :customer_id
-  has_many :purchased_offers, through: :bookings, source: :offer
+# db/migrate/20210213135345_add_status_to_bookings.rb
+class AddStatusToBookings < ActiveRecord::Migration[6.0]
+  def change
+    add_column :bookings, :status, :integer, default: 0, null: false
+  end
 end
 ```
+
+Then, we need to declare the enum in the model:
+```ruby
+# app/models/booking.rb
+class Booking < ApplicationRecord
+  # ...
+
+  enum status: { pending: 0, processing_payment: 1, confirmed: 2, cancelled: -1 }
+end
+
+```
+
+### Now we can do some magic with it. What can we do?
+
+1. We have some new methods to check the status.
+
+    Instead of
+    ```ruby
+      booking.status == 'confirmed'
+    ```
+
+    We can use
+    ```ruby
+      booking.confirmed?
+    ```
+
+2. We have some new methods to update the status.
+
+    Instead of
+    ```ruby
+      booking.update status: 'confirmed'
+    ```
+
+    We can use
+    ```ruby
+      booking.confirmed!
+    ```
+
+3. We have easier validation
+
+    Instead of
+    ```ruby
+      class Booking < ApplicationRecord
+        validates :status, inclusion: in: %w[ pending processing_payment confirmed cancelled ]
+      end
+    ```
+
+    We don't need to write anything! It's done already 👌😎
+    
+4. We have scopes
+
+    We can use
+    ```ruby
+      Booking.pending # same as Booking.where(status: :pending)
+      Booking.processing_payment # same as Booking.where(status: :processing_payment)
+      Booking.confirmed # same as Booking.where(status: :confirmed)
+      Booking.cancelled # same as Booking.where(status: :cancelled)
+    ```
 
 And we're good to go 🤓
 
 ### Other sources
-https://marouenbousnina.com/tutorials/2018-06-11-rename-activerecord-model/
+https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html
+https://dev.to/ousmanedev/use-activerecord-enum-for-your-enumerations-p7k
