@@ -121,7 +121,7 @@ end
 
 And we're good to go 🤓
 
-### Other sources
-https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html
-https://dev.to/ousmanedev/use-activerecord-enum-for-your-enumerations-p7k
-https://naturaily.com/blog/ruby-on-rails-enum
+### Sources
+* https://api.rubyonrails.org/v5.2.4.4/classes/ActiveRecord/Enum.html
+* https://dev.to/ousmanedev/use-activerecord-enum-for-your-enumerations-p7k
+* https://naturaily.com/blog/ruby-on-rails-enum
